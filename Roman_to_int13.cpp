@@ -42,21 +42,60 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 解释: M = 1000, CM = 900, XC = 90, IV = 4.
 */
 
+/*
+解题思路：字符串处理题目要分清各种情况的处理逻辑即可，
+当 s[i] < s[i+1]  sum += s[i+1]-s[i]
+当 s[i] = s[i+1]  sum += s[i]*cnt
+当 s[i] > s[i+1]  sum += s[i]
+
+注意：最后检查s[size-1]的时候不需要往后看一位，直接
+sum += s[i]
+*/
+
 class Solution {
 public:
 	struct str_map{
 		char ch;
 		int num;
 	};
-	static str_map roman_to_int_map[7] = {{'I',1},{'V',5},{'X',10},{'L',50},{'C',100},{'D',500},{'M',1000}};
+	const str_map roman_to_int_map[8] = {{'I',1},{'V',5},{'X',10},{'L',50},{'C',100},{'D',500},{'M',1000},{'#',0}};
     int romanToInt(string s) {
     	int size =  s.size();
     	int index = 0;
-    	for(int i = 0; i < size-1; i++){
-    		index = i+1;
-    		if(getgets[i] < s[index]){
-
+    	int sum = 0;
+    	for(int i = 0; i < size; i++){
+    		int index = i+1;
+    		if(index == size){
+    			sum += get_num(s[i]);
+    			return sum;
+    		}
+    		if(get_num(s[i]) < get_num(s[index])){
+    			sum += get_num(s[index]) - get_num(s[i]);
+    			i++;
+    		}else if(get_num(s[i]) == get_num(s[index])){
+    			int count = 1;
+    			while(i+1 < size && s[i+1] == s[i]){
+    				i++;
+    				count++;
+    			}
+    			sum += count*get_num(s[i-1]);
+    		}else{
+    			sum += get_num(s[i]);
     		}
     	}
+    	
+    	return sum;
+    }
+
+    int get_num(char ch){
+    	int cnt = 0;
+    	while('#' != roman_to_int_map[cnt].ch){
+    		if(ch == roman_to_int_map[cnt].ch){
+    			return roman_to_int_map[cnt].num ;
+    		}
+    		cnt++;
+    	}
+
+    	return -1;
     }
 };
