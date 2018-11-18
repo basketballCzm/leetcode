@@ -46,3 +46,7 @@ public:
     	return str;
     }
 };
+
+cmake -DLLVM_CONFIG_BINARY=/usr/lib/llvm-4.0/bin/llvm-config -DLLVMCC=/usr/bin/clang-4.0 -DLLVMCXX=/usr/bin/clang++-4.0 \
+-DENABLE_SOLVER_STP=ON \
+../klee \
