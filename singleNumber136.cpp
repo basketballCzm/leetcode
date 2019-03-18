@@ -18,54 +18,54 @@
 排好序使用该数组的特性，使用STL unordered_map 或者 map
 */
 class Solution {
-public:
+  public:
     int singleNumber(vector<int>& nums) {
-    	int size = nums.size();
-    	int i,j;
-    	for(i = 0; i < size; i++){
-    		for(j = 0; j < size; j++){
-    			if(i != j){
-    				if(nums[i] == nums[j]){
-    					break;
-    				}
-    			}
-    		}
+        int size = nums.size();
+        int i, j;
+        for (i = 0; i < size; i++) {
+            for (j = 0; j < size; j++) {
+                if (i != j) {
+                    if (nums[i] == nums[j]) {
+                        break;
+                    }
+                }
+            }
 
-    		if(j == size){
-    			return nums[i];
-    		}
-    	}
+            if (j == size) {
+                return nums[i];
+            }
+        }
     }
 };
 
-class Solution{
-public:
-	int singleNumber(vector<int>& nums) {
-		unordered_map<int,int> int_map;
-		for(auto x : nums){
-			int_map[x]++;
-		}
+class Solution {
+  public:
+    int singleNumber(vector<int>& nums) {
+        unordered_map<int, int> int_map;
+        for (auto x : nums) {
+            int_map[x]++;
+        }
 
-		for(auto x : int_map){
-			if(1 == x.second){
-				return x.first;
-			}
-		}
-	}
+        for (auto x : int_map) {
+            if (1 == x.second) {
+                return x.first;
+            }
+        }
+    }
 };
 
-class Solution{
-public:
-	int singleNumber(vector<int>& nums){
-		sort(nums.begin(), nums.end());
-		for(int i = 0; i < nums.size()/2; i++){
-			if(nums[2*i] != nums[2*i+1]){
-				return nums[2*i];
-			}
-		}
+class Solution {
+  public:
+    int singleNumber(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        for (int i = 0; i < nums.size() / 2; i++) {
+            if (nums[2 * i] != nums[2 * i + 1]) {
+                return nums[2 * i];
+            }
+        }
 
-		return nums[nums.size()-1];
-	}
+        return nums[nums.size() - 1];
+    }
 };
 
 

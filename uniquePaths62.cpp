@@ -30,57 +30,63 @@
 */
 
 class Solution {
-public:
-    int uniquePaths(int m, int n) {
+  public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int step = 0;
-        DFS(m, n, 0, 0, step);
+        int n = obstacleGrid.size();
+        int m = obstacleGrid[0].size();
+        DFS(obstacleGrid, m, n, 0, 0, step);
         return step;
     }
 
-    void DFS(int m, int n, int x, int y, int& step){
-        if(x >= m || y >= n){
+    void DFS(vector<vector<int>>& obstacleGrid, int m, int n, int x, int y, int& step) {
+        if (x >= m || y >= n) {
             return;
-        }else if(m-1 == x && n-1 == y){
+        } else if (1 == obstacleGrid[y][x]) {
+            return;
+        } else if (m - 1 == x && n - 1 == y) {
             step++;
             return;
-        }else{
-            DFS(m, n, x+1, y, step);//向右
-            DFS(m, n, x, y+1, step);//向下
+        } else {
+            DFS(obstacleGrid, m, n, x + 1, y, step); //向右
+            DFS(obstacleGrid, m, n, x, y + 1, step); //向下
         }
     }
 };
 
 //数学解法输入7 3 相当于向右走6步，向下走2步。总步数为8，C8 2。
 class Solution {
-public:
+  public:
     int uniquePaths(int m, int n) {
         unsigned long x = 1;
         unsigned long y = 1;
-        int small = m>n?n:m;
-        for(int i = 0; i < small-1; i++){
-            x *= m+n-2-i;
-            y *= (i+1);
+        int small = m > n ? n : m;
+        for (int i = 0; i < small - 1; i++) {
+            x *= m + n - 2 - i;
+            y *= (i + 1);
         }
 
-        return (int)(x/y);
+        return (int)(x / y);
 
     }
 };
 
 //动态规划DP 到达该点一共有几条路
 class Solution {
-public:
+  public:
     int uniquePaths(int m, int n) {
         //第一行和第一列的值都为1
-        vector<vector<int>> dp(n,vector<int>(m,1));
+        vector<vector<int>> dp(n, vector<int>(m, 1));
         //可以只使用一维数组通过行或列进行递推
 
-        for(int i = 1; i < n; i++){
-            for(int j = 1; j < m; j++){
-                dp[i][j] = dp[i-1][j]+dp[i][j-1];
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
             }
         }
 
-        return dp[n-1][m-1];
+        return dp[n - 1][m - 1];
     }
 };
+
+

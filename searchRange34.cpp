@@ -21,58 +21,58 @@
 */
 
 class Solution {
-public:
+  public:
     vector<int> searchRange(vector<int>& nums, int target) {
-    	int left = 0;
-    	vector<int> res;
-    	int right = nums.size()-1;
-    	//防止nums[mid]崩溃  nums.size()-1
-    	int mid = 0;
+        int left = 0;
+        vector<int> res;
+        int right = nums.size() - 1;
+        //防止nums[mid]崩溃  nums.size()-1
+        int mid = 0;
 
-    	//找到最左边的值
-    	while(left <= right){
-    		mid = (left+right)/2;
-    		if(nums[mid] < target){
-    			left = mid+1;
-    		}else if(nums[mid] > target){
-    			right = mid-1;
-    		}else{
-    			//先求left的值，查看当前查找元素的后一个元素，看看是否和target相等
-    			if(mid > 0 && nums[mid-1] == target){
-    				//相当于中间节点往后移动一位或者不移动
-    				right--;
-    			}else{
-    				res.push_back(mid);
-    				break;
-    			}
-    		}
-    	}
+        //找到最左边的值
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                //先求left的值，查看当前查找元素的后一个元素，看看是否和target相等
+                if (mid > 0 && nums[mid - 1] == target) {
+                    //相当于中间节点往后移动一位或者不移动
+                    right--;
+                } else {
+                    res.push_back(mid);
+                    break;
+                }
+            }
+        }
 
-    	if(0 == res.size()){
-    		res.push_back(-1);
-    		res.push_back(-1);
-    		return res;
-    	}
+        if (0 == res.size()) {
+            res.push_back(-1);
+            res.push_back(-1);
+            return res;
+        }
 
-    	//找到最右边的值
-    	left = 0;
-    	right = nums.size();
-    	while(left <= right){
-    		mid = (left+right)/2;
-    		if(nums[mid] < target){
-    			left = mid+1;
-    		}else if(nums[mid] > target){
-    			right = mid-1;
-    		}else{
-    			if(nums[mid+1] == target){
-    				left++;
-    			}else{
-    				res.push_back(mid);
-    				break;
-    			}
-    		}
-    	}
+        //找到最右边的值
+        left = 0;
+        right = nums.size();
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                if (nums[mid + 1] == target) {
+                    left++;
+                } else {
+                    res.push_back(mid);
+                    break;
+                }
+            }
+        }
 
-    	return res;
+        return res;
     }
 };
