@@ -24,123 +24,124 @@ using namespace std;
 将目标字符串映射为一个大小为255的小型hash表，然后遍历原字符串，用i值进行滑动，用start值进行固定，一次匹配完成后注意在选取最小子串的时候进行字符串开始start阶段的去重工作，完成后与前一个子串大小相互比较，然后再将start++，found--。注意在操作start值的时候对应的shash的值也要做相应的变化
 */
 class Solution {
-public:
+  public:
     string minWindow(string s, string t) {
-    	string res;
-    	int s1 = s.size();
-    	int t1 = t.size();
-    	if(s1 < t1){
-    		return "";
-    	}
+        string res;
+        int s1 = s.size();
+        int t1 = t.size();
+        if (s1 < t1) {
+            return "";
+        }
 
-    	for(int i = 0; i < s1; i++){
-    		//mark  这里的s1要加1
-    		for(int j = i+t1; j < s1+1; j++){
-    			string tmp = s.substr(i,j-i);
-    			if(check_substr(t,tmp)){
-    				if(res.empty()){
-    					res = tmp;
-    				}else{
-    					if(tmp.size() < res.size()){
-    						res = tmp;
-    					}
-    				}
-    				break;
-    			}
-    		}
-    	}
+        for (int i = 0; i < s1; i++) {
+            //mark  这里的s1要加1
+            for (int j = i + t1; j < s1 + 1; j++) {
+                string tmp = s.substr(i, j - i);
+                if (check_substr(t, tmp)) {
+                    if (res.empty()) {
+                        res = tmp;
+                    } else {
+                        if (tmp.size() < res.size()) {
+                            res = tmp;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
 
-    	return res;
+        return res;
     }
 
-    bool check_substr(string t, string sub_str){
+    bool check_substr(string t, string sub_str) {
 
-    	int size1 = t.size();
-    	int size2 = sub_str.size();
-    	int ncount = 0;
-    	for(int i = 0; i < size1; i++){
-    		for(int j = 0; j < size2; j++){
-    			if(t[i] == sub_str[j]){
-    				ncount++;
-    				/*
- 输入：
-"bbaa"
-"aba"
-输出：
-"bba"
-预期：
-"baa"
-    				*/
-    				sub_str.erase(sub_str.begin()+j, sub_str.begin()+j+1);
-    				break;
-    			}
-    		}
-    	}
-    	if(ncount == size1){
-    		return true;
-    	}else{
-    		return false;
-    	}
+        int size1 = t.size();
+        int size2 = sub_str.size();
+        int ncount = 0;
+        for (int i = 0; i < size1; i++) {
+            for (int j = 0; j < size2; j++) {
+                if (t[i] == sub_str[j]) {
+                    ncount++;
+                    /*
+                    输入：
+                    "bbaa"
+                    "aba"
+                    输出：
+                    "bba"
+                    预期：
+                    "baa"
+                    */
+                    sub_str.erase(sub_str.begin() + j, sub_str.begin() + j + 1);
+                    break;
+                }
+            }
+        }
+        if (ncount == size1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 };
 
-int main(){
-	Solution s;
-	string s1 = s.minWindow("a","a");
-	string s2 = "0123456";
-	s2.erase(s2.begin(),s2.begin()+1);
-	cout << s2 << endl;
+int main() {
+    Solution s;
+    string s1 = s.minWindow("a", "a");
+    string s2 = "0123456";
+    s2.erase(s2.begin(), s2.begin() + 1);
+    cout << s2 << endl;
 }
 
 
-class Solution{
-public:
-	string minWindow(string s, string t){
-		if(s.empty() || t.empty()){
-			return "";
-		}
-		int shash[255] = {0};
-		int thash[255] = {0};
-		for(int i = 0; i < t.size(); i++){
-			thash[t[i]]++;
-		}
+class Solution {
+  public:
+    string minWindow(string s, string t) {
+        if (s.empty() || t.empty()) {
+            return "";
+        }
+        int shash[255] = {0};
+        int thash[255] = {0};
+        for (int i = 0; i < t.size(); i++) {
+            thash[t[i]]++;
+        }
 
-		int start = 0;
-		int res = s.size()+1;
-		int res_start = -1;
-		int res_end = 0;
-		int found = 0;
-		for(int i = 0, start = i; i < s.size(); i++){
-			shash[s[i]]++;
+        int start = 0;
+        int res = s.size() + 1;
+        int res_start = -1;
+        int res_end = 0;
+        int found = 0;
+        for (int i = 0, start = i; i < s.size(); i++) {
+            shash[s[i]]++;
 
-			if(shash[s[i]] <= thash[s[i]]){
-				found++;
-			}
+            if (shash[s[i]] <= thash[s[i]]) {
+                found++;
+            }
 
-			if(found == t.size()){
-				//去除字符串开头多余的字符
-				while(start < i && shash[s[start]] > thash[s[start]]){
-					shash[s[start]]--;
-					start++;
-				}
+            if (found == t.size()) {
+                //去除字符串开头多余的字符
+                while (start < i && shash[s[start]] > thash[s[start]]) {
+                    shash[s[start]]--;
+                    start++;
+                }
 
-				if(i-start+1 < res){
-					res_start = start;
-					res_end = i;
-					res = i-start+1;
-				}
+                if (i - start + 1 < res) {
+                    res_start = start;
+                    res_end = i;
+                    res = i - start + 1;
+                }
 
-				//将开始字符向前重新移动一个
-				shash[s[start]]--;
-				start++;
-				found--;
-			}
-		}
+                //开始新一个
+                //将开始字符向前重新移动一个
+                shash[s[start]]--;
+                start++;
+                found--;
+            }
+        }
 
-		if(-1 == res_start){
-			return "";
-		}
+        if (-1 == res_start) {
+            return "";
+        }
 
-		return s.substr(res_start, res);
-	}
+        return s.substr(res_start, res);
+    }
 };

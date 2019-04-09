@@ -32,4 +32,4 @@ Department 表包含公司所有部门的信息。
 select d.Name as Department, e1.Name as Employee, e1.Salary as Salary
 from Employee e1 inner join Department d on e1.DepartmentId = d.Id
 where Salary in 
-(select max(Salary) from Employee e2 where e1.DepartmentId = e2.departmentId)
+(select max(Salary) from Employee e2 where e1.DepartmentId = e2.DepartmentId)
