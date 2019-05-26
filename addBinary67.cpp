@@ -15,31 +15,31 @@
 /*
 相当于按照合并两个链表的思路进行合并两个二进制串，但是遍历的顺序要注意按照从尾到头的顺序进行遍历。可以使用string::reverse_iterator迭代器进行处理
 注意使用
-a.rbegin() string::reverse_iterator  
-a.begin() string::iterator  
+a.rbegin() string::reverse_iterator
+a.begin() string::iterator
 a.cbegin() string::const_iterator
 */
 
 class Solution {
-public:
+  public:
     string addBinary(string a, string b) {
         string c;
         int flag = 0;
         string::reverse_iterator ita = a.rbegin();
         string::reverse_iterator itb = b.rbegin();
 
-        while(a.rend() != ita && b.rend() != itb){
-            int tmp = (*ita-'0'+*itb-'0')+flag;
-            if(3 == tmp){
+        while (a.rend() != ita && b.rend() != itb) {
+            int tmp = (*ita - '0' + *itb - '0') + flag;
+            if (3 == tmp) {
                 flag = 1;
                 c.insert(c.begin(), '1');
-            }else if(2 == tmp){
+            } else if (2 == tmp) {
                 flag = 1;
                 c.insert(c.begin(), '0');
-            }else if(1 == tmp){
+            } else if (1 == tmp) {
                 flag = 0;
                 c.insert(c.begin(), '1');
-            }else{
+            } else {
                 flag = 0;
                 c.insert(c.begin(), '0');
             }
@@ -48,15 +48,15 @@ public:
             itb++;
         }
 
-        while(a.rend() !=  ita){
-            int tmp = (*ita-'0')+flag;
-            if(2 == tmp){
+        while (a.rend() !=  ita) {
+            int tmp = (*ita - '0') + flag;
+            if (2 == tmp) {
                 flag = 1;
                 c.insert(c.begin(), '0');
-            }else if(1 == tmp){
+            } else if (1 == tmp) {
                 flag = 0;
                 c.insert(c.begin(), '1');
-            }else{
+            } else {
                 flag = 0;
                 c.insert(c.begin(), '0');
             }
@@ -64,22 +64,22 @@ public:
             ita++;
         }
 
-        while(b.rend() !=  itb){
-            int tmp = (*itb-'0')+flag;
-            if(2 == tmp){
+        while (b.rend() !=  itb) {
+            int tmp = (*itb - '0') + flag;
+            if (2 == tmp) {
                 flag = 1;
                 c.insert(c.begin(), '0');
-            }else if(1 == tmp){
+            } else if (1 == tmp) {
                 flag = 0;
                 c.insert(c.begin(), '1');
-            }else{
+            } else {
                 flag = 0;
                 c.insert(c.begin(), '0');
             }
             itb++;
         }
 
-        if(1 == flag){
+        if (1 == flag) {
             c.insert(c.begin(), '1');
         }
 
@@ -90,7 +90,7 @@ public:
 
 
 class Solution {
-public:
+  public:
     string addBinary(string a, string b) {
 
         int alen = a.length(), blen = b.length();
@@ -122,3 +122,15 @@ public:
         return result;
     }
 };
+
+
+
+/*
+struct RandomListNode {
+    int label;
+    struct RandomListNode *next, *random;
+    RandomListNode(int x) :
+            label(x), next(NULL), random(NULL) {
+    }
+};
+*/
