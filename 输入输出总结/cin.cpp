@@ -1,10 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <sstream>
+#include <bits/stdc++.h>
 using namespace std;
+// 循环输入整数
 int main() {
     string str;
+    // 多次输入形式重复的数据
+    // while(cin >> k)
     while (getline(cin, str)) {
         vector<int> num;
         int temp;
@@ -18,4 +18,5 @@ int main() {
         cout << endl;
     }
 }
+
 
